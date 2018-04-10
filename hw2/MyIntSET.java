@@ -71,7 +71,7 @@ public class MyIntSET {
 	 * Note that the height of the empty tree is defined to be -1.
 	 */
 	public int height() {
-		// TODO
+		// TODO Done
 		if(root == null)
 			return -1;
 		return heightHelper(root);
@@ -90,6 +90,7 @@ public class MyIntSET {
 	 * should return 3  (25, 37, and 127).
 	 */
 	public int sizeOdd() {
+		//Done
 		if(root == null)
 			return 0;
 		return sizeOddHelper(root);
@@ -132,7 +133,7 @@ public class MyIntSET {
 	 * t.sizeAtDepth(k) == 0 for k >= 4
 	 */
 	public int sizeAtDepth(int k) {
-		// TODO
+		// TODO DONE? MUST DOUBLE CHECK
 		return sizeAtDepthHelper(root, 0, k);
 	}
 	
@@ -164,8 +165,16 @@ public class MyIntSET {
 	 * t.sizeAboveDepth(k) == 7 for k >= 4		[50, 25, 100, 12, 37, 150, 127] 
 	 */
 	public int sizeAboveDepth(int k) {
-		// TODO
-		return 0;
+		// TODO DONE?
+		return sizeAboveDepthHelper(root, 0, k);
+	}
+	
+	private int sizeAboveDepthHelper(Node n, int current, int depth) {
+		if(n != null &&  current < depth) {
+			return sizeAboveDepthHelper(n.left, current + 1, depth) + sizeAboveDepthHelper(n.right, current + 1, depth) +1;
+		}
+		
+		else return 0;
 	}
 
 	// A tree is perfect if for every node, size of left == size of right
@@ -176,7 +185,14 @@ public class MyIntSET {
 	 */
 	public boolean isPerfectlyBalancedS() {
 		// TODO
+		int test = isPerfectlyBalancedSHelper(root);
 		return false;
+	}
+	
+	private int isPerfectlyBalancedSHelper(Node n) {
+		if(n == null)
+			return 0;
+		
 	}
 
 

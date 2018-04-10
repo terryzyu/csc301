@@ -50,11 +50,7 @@ public class HW2Test {
 	@Test
 	public void testSizeAtDepth() {
 		MyIntSET set = fromString("50 25 100 12 37 150 127");
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("Test: " + set.sizeAtDepth(0));
+		//System.out.println("Test: " + set.sizeAtDepth(0));
 		assertEquals(1, set.sizeAtDepth(0));
 		assertEquals(2, set.sizeAtDepth(1));
 		assertEquals(3, set.sizeAtDepth(2));
@@ -64,7 +60,18 @@ public class HW2Test {
 		
 	}
 	
-	
+	@Test
+	public void testSizeAboveDepth() {
+		MyIntSET set = fromString("50 25 100 12 37 150 127");
+		System.out.println("Test: " + set.sizeAboveDepth(0));
+		assertEquals(0, set.sizeAboveDepth(0));
+		assertEquals(1, set.sizeAboveDepth(1));
+		assertEquals(3, set.sizeAboveDepth(2));
+		assertEquals(6, set.sizeAboveDepth(3));
+		assertEquals(7, set.sizeAboveDepth(421412));
+		assertEquals(7, set.sizeAboveDepth(4));
+		
+	}
 	// Write some more test functions below.
 	// Make sure to test all of the functions your wrote on various
 	// trees of different shapes and sizes.
