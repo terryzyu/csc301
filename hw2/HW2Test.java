@@ -63,7 +63,6 @@ public class HW2Test {
 	@Test
 	public void testSizeAboveDepth() {
 		MyIntSET set = fromString("50 25 100 12 37 150 127");
-		System.out.println("Test: " + set.sizeAboveDepth(0));
 		assertEquals(0, set.sizeAboveDepth(0));
 		assertEquals(1, set.sizeAboveDepth(1));
 		assertEquals(3, set.sizeAboveDepth(2));
@@ -72,6 +71,87 @@ public class HW2Test {
 		assertEquals(7, set.sizeAboveDepth(4));
 		
 	}
+	
+	//MUST EDIT CODE. ANYTHING WITH TREES MUST EDIT
+	 @Test
+	    public void testLeftSkewed() {
+	        /*     1
+	        *    /
+	        *   2
+	        *  /
+	        * 3  
+	        */
+		 MyIntSET set = fromString("6 5 4 32 64 62 84 3 2 1");
+	        //set.prettyPrint();
+	        //assertFalse(set.isPerfectlyBalancedS());
+	    }
+
+
+	    @Test 
+	    public void testRightSkewed() {
+		/*   
+	    	1
+		        2
+		            3
+		                4
+		                    5
+		                        6
+		*/
+	    	MyIntSET set = fromString("1 2 3 4 5 6");
+	        //set.prettyPrint();
+	        //assertFalse(set.isPerfectlyBalancedS());
+	    }
+
+	    @Test 
+	    public void testSuccessCase() {
+	        /*
+	         *          1
+	         *         / \
+	         *        2   3
+	         *       /\  
+	         *      4  5
+	         */
+	        MyIntSET set = fromString("1 2 3 4 5 null null");
+	        
+	        assertTrue(set.isPerfectlyBalancedS()); 
+	    }
+
+	    @Test
+	    public void testFailureCase() {
+	        /*         
+	         *         1
+	         *        / \ 
+	         *       2   3    
+	         *      / \    
+	         *     4   5
+	         *        / \ 
+	         *       6   7 
+	         */
+	        MyIntSET set = fromString("1 2 3 4 5 null null null null 6 7 null null");
+	        
+	        assertTrue(set.isPerfectlyBalancedS()); 
+	    }
+	    
+	    @Test
+	    public void testRemoveOddSubtrees() {
+	    	MyIntSET set = fromString("50 25 100 12 26 27 29 901 502 1239 37 150 127");
+	    	set.removeOddSubtrees();
+	    	//set.printInOrder();
+	    }
+	    
+	    @Test
+	    public void testTreeEquals() {
+	    	MyIntSET set1 = fromString("50 25 100 12 26 27 29 901 502 1239 37 150 127");
+	    	MyIntSET set2 = fromString("50 25 100 12 26 27 29 901 502 1239 37 150 127");
+	    }
+	    
+	    @Test
+	    public void testBalanced() {
+	    	MyIntSET set1 = fromString("2 1 3");
+	    	System.out.println(set1.isPerfectlyBalancedS());
+	    	set1.prettyPrint();
+	    }
+	    
 	// Write some more test functions below.
 	// Make sure to test all of the functions your wrote on various
 	// trees of different shapes and sizes.
