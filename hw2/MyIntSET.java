@@ -133,7 +133,21 @@ public class MyIntSET {
 	 */
 	public int sizeAtDepth(int k) {
 		// TODO
-		return 0;
+		return sizeAtDepthHelper(root, 0, k);
+	}
+	
+	private int sizeAtDepthHelper(Node n, int current, int k) {
+		if (n == null || current > k) {
+			return 0;
+		}
+		if(k == 0) {
+			return 1;
+		}
+		if (k == current) {
+			return 1;
+		}
+		return sizeAtDepthHelper(n.right, current + 1, k) + sizeAtDepthHelper(n.left, current + 1, k);
+		
 	}
 
 
