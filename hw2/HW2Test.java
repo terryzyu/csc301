@@ -23,27 +23,37 @@ public class HW2Test {
 	public void testSingleKey() {
 		MyIntSET set = new MyIntSET();
 		assertEquals(0, set.size());
+		assertEquals(-1, set.height());
 		set.put(42);
-		// set.prettyPrint();
 		assertEquals(1, set.size());
-		// System.out.println("Height " + set.height());
 	}
 
 	@Test
 	public void testLargerTree() {
 		MyIntSET set = fromString("5 3 7 4");
-		// set.prettyPrint();
 		assertEquals(4, set.size());
 		set.put(42);
 		assertEquals(5, set.size());
-		// System.out.println("Height = " + set.height());
 	}
 
 	@Test
 	public void testSizeOdd() {
 		MyIntSET set = fromString("50 25 100 12 37 150 127");
-		// set.prettyPrint();
-		// System.out.println(set.sizeOdd());
+		assertEquals(3, set.sizeOdd()); //Initially correct number of odds
+		
+		//Adding 2 odd nodes
+		set.put(52);
+		set.put(79);
+		set.put(03);
+		set.put(3);
+		assertEquals(5, set.sizeOdd());
+		
+		set.removeOddSubtrees(); //Deletes all possible odds
+		assertEquals(0, set.sizeOdd());
+		
+		set = fromString(" "); //Empty tree
+		assertEquals(0, set.sizeOdd());
+		
 
 	}
 
@@ -99,16 +109,35 @@ public class HW2Test {
 
 	@Test
 	public void testTreeEqualsSuccess() {
+		//Two exact same inputs
 		MyIntSET set1 = fromString("50 25 100 12 26 27 29 901 502 1239 37 150 127");
 		MyIntSET set2 = fromString("50 25 100 12 26 27 29 901 502 1239 37 150 127");
 		assertTrue(set1.treeEquals(set2));
+		
+		//Both are empty
+		set1 = fromString(" ");
+		set2 = fromString(" ");
+		assertTrue(set1.treeEquals(set2));
+		
+		//Inserting 1 node and checking
+		set1 = fromString("50 25 100 12 26 27 29 901 502 1239 37 150");
+		set2 = fromString("50 25 100 12 26 27 29 901 502 1239 37 150 127");
+		assertFalse(set1.treeEquals(set2));
+		
+		set1.put(127);
+		assertTrue(set1.treeEquals(set2));
+		
 	}
 
 	@Test
 	public void testTreeEqualsFailure() {
-		//1 node removal
+		//1 node missing
 		MyIntSET set1 = fromString("50 25 12 26 27 29 901 502 1239 37 150 127");
 		MyIntSET set2 = fromString("50 25 100 12 26 27 29 901 502 1239 37 150 127");
+		assertFalse(set1.treeEquals(set2));
+		
+		//Compares empty to a tree
+		set1 = fromString(" ");
 		assertFalse(set1.treeEquals(set2));
 	}
 	
@@ -119,6 +148,11 @@ public class HW2Test {
 		MyIntSET set1 = fromString("64 23 8745 2 46 874 4365 351 56 68 98 12 643 32 54");
 		MyIntSET set2 = fromString("50 25 100 12 26 27 29 901 502 1239 37 150 127");
 		assertFalse(set1.treeEquals(set2));
+		
+		//Sets first one to null
+		set1 = fromString(" ");
+		assertFalse(set1.treeEquals(set2));
+		
 	}
 	
 	
