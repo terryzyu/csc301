@@ -35,6 +35,21 @@ public class HW2Test {
 		set.put(42);
 		assertEquals(5, set.size());
 	}
+	
+	@Test
+	public void testHeight() {
+		MyIntSET set = fromString("25 62 75 12 4 3");
+		assertEquals(4, set.height()); //Height of some tree.
+		
+		set = fromString(" "); //Empty tree
+		assertEquals(-1, set.height());
+		
+		set = fromString("32"); //Single node i.e. root
+		assertEquals(1,set.height());
+		
+		set.put(52); //Adds node to root
+		assertEquals(2, set.height());
+	}
 
 	@Test
 	public void testSizeOdd() {
@@ -60,7 +75,6 @@ public class HW2Test {
 	@Test
 	public void testSizeAtDepth() {
 		MyIntSET set = fromString("50 25 100 12 37 150 127");
-		// System.out.println("Test: " + set.sizeAtDepth(0));
 		assertEquals(1, set.sizeAtDepth(0));
 		assertEquals(2, set.sizeAtDepth(1));
 		assertEquals(3, set.sizeAtDepth(2));
@@ -82,7 +96,6 @@ public class HW2Test {
 
 	}
 
-	// MUST EDIT CODE. ANYTHING WITH TREES MUST EDIT
 	@Test
 	public void testPerfectlyBalanced() {
 		MyIntSET set = fromString("6 5 4 3 2 1"); //Left skewed
@@ -154,11 +167,5 @@ public class HW2Test {
 		assertFalse(set1.treeEquals(set2));
 		
 	}
-	
-	
-
-	// Write some more test functions below.
-	// Make sure to test all of the functions your wrote on various
-	// trees of different shapes and sizes.
 
 }
