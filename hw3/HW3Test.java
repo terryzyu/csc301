@@ -50,16 +50,26 @@ public class HW3Test {
 	@Test
 	public void insertlol() {
 		TwoThreeIntSet s = new TwoThreeIntSet();
+		s.put(18);
+		s.put(4);
+		s.put(0);
+		s.put(17);
+		s.put(2);
+		s.put(7);
+		s.put(23);
+		s.put(12);
+		s.put(15);
+		s.put(11);
+		System.out.print(s.levelOrder());
+	}
+	
+	@Test
+	public void assRapeTeacherWillProbablyGive() {
+		TwoThreeIntSet s = new TwoThreeIntSet();
 		for(int i = -1000; i < 1000; i = i + 2) {
 			s.put(i);
 		}
 		for(int i = -999; i < 999; i = i + 2) {
-			s.put(i);
-		}
-		for(int i = -2000; i < -1001; i = i + 2) {
-			s.put(i);
-		}
-		for(int i = 2000; i < 3001; i++) {
 			s.put(i);
 		}
 		System.out.print(s.levelOrder());

@@ -229,7 +229,7 @@ public class TwoThreeIntSet {
 				return n;
 
 			} else if (n.nodeType == 3) {
-				// TODO
+				// TODO Done?
 				//Before first
 				if(item < n.items[0]) {
 					Node result = put(n.subtrees[0], item);
@@ -245,10 +245,12 @@ public class TwoThreeIntSet {
 						n.items[2] = n.items[1];
 						n.items[1] = n.items[0];
 						n.items[0] = result.items[1];
+						n.nodeType = 4;
 					}
 				} //Before first
+				
 				//Between first and second
-				else if(n.items[0] > item && item < n.items[1]) {
+				else if(item > n.items[0] && item < n.items[1]) {
 					Node result = put(n.subtrees[1], item);
 					//If no violation then left subtree is replaced with the new one
 					if(result.nodeType != 4) {
@@ -260,6 +262,7 @@ public class TwoThreeIntSet {
 						n.subtrees[1] = new Node(result.items[0], result.subtrees[0], result.subtrees[1]);
 						n.items[2] = n.items[1];
 						n.items[1] = result.items[1];
+						n.nodeType = 4;
 					}
 				} //Between first and second
 				else {
@@ -272,6 +275,7 @@ public class TwoThreeIntSet {
 						n.subtrees[3] = new Node(result.items[2], result.subtrees[2], result.subtrees[3]);
 						n.subtrees[2] = new Node(result.items[0], result.subtrees[0], result.subtrees[1]);
 						n.items[2] = result.items[1];
+						n.nodeType = 4;
 					}
 				} // Past second
 				
@@ -341,7 +345,7 @@ public class TwoThreeIntSet {
 		return result.toString();
 	}
 
-	// A tiny main that inserts 10-19 into an emtpy TwoThreeIntSet
+	// A tiny main that inserts 10-19 into an empty TwoThreeIntSet
 	// And prints out the level order after each insertion.
 	public static void main(String[] args) {
 		TwoThreeIntSet t = new TwoThreeIntSet();
