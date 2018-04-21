@@ -46,4 +46,22 @@ public class HW3Test {
 		}
 		assertEquals("(4|222)", s.levelOrder());
 	}
+	
+	@Test
+	public void insertlol() {
+		TwoThreeIntSet s = new TwoThreeIntSet();
+		for(int i = -1000; i < 1000; i = i + 2) {
+			s.put(i);
+		}
+		for(int i = -999; i < 999; i = i + 2) {
+			s.put(i);
+		}
+		for(int i = -2000; i < -1001; i = i + 2) {
+			s.put(i);
+		}
+		for(int i = 2000; i < 3001; i++) {
+			s.put(i);
+		}
+		System.out.print(s.levelOrder());
+	}
 }

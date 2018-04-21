@@ -75,11 +75,18 @@ public class TwoThreeIntSet {
 		}
 
 		else if (n.nodeType == 3) {
-			// TODO
+			// TODO DONE?
 			// If the node is a 3-node, we must check both items in this node. If neither is
 			// the item we are looking for, we must decide which of the three subtrees to
 			// search next.
-			throw new RuntimeException("Implement me");
+			if (item < n.items[0])
+				return contains(n.subtrees[0], item);
+			if(item > n.items[0] && item < n.items[1])
+				return contains(n.subtrees[1], item);
+			if (item > n.items[1])
+				return contains(n.subtrees[2], item);
+			return true;
+			//throw new RuntimeException("Implement me");
 		}
 
 		// If this node is not a 2-node or a 3-node, this is an error
@@ -158,10 +165,23 @@ public class TwoThreeIntSet {
 			}
 
 			else if (n.nodeType == 3) {
-				// TODO
+				// TODO Done?
 				// Turn this into a 4-node and return it since you are allowed
 				// to temporarily have a 4-node as a the root.
-				throw new RuntimeException("Implement me");
+				if (item < n.items[0]) {
+					n.items[2] = n.items[1];
+					n.items[1] = n.items[0];
+					n.items[0] = item;
+				} 
+				else if(item > n.items[0] && item < n.items[1]){
+					n.items[2] = n.items[1];
+					n.items[1] = item;
+				}
+				else {
+					n.items[2] = item;
+				}
+				n.nodeType = 4;
+				//throw new RuntimeException("Implement me");
 			}
 
 			else
@@ -210,7 +230,53 @@ public class TwoThreeIntSet {
 
 			} else if (n.nodeType == 3) {
 				// TODO
-				throw new RuntimeException("Implement me!");
+				//Before first
+				if(item < n.items[0]) {
+					Node result = put(n.subtrees[0], item);
+					//If no violation then left subtree is replaced with the new one
+					if(result.nodeType != 4) {
+						n.subtrees[0] = result;
+					}
+					else {
+						n.subtrees[3] = n.subtrees[2];
+						n.subtrees[2] = n.subtrees[1];
+						n.subtrees[1] = new Node(result.items[2], result.subtrees[2], result.subtrees[3]);
+						n.subtrees[0] = new Node(result.items[0], result.subtrees[0], result.subtrees[1]);
+						n.items[2] = n.items[1];
+						n.items[1] = n.items[0];
+						n.items[0] = result.items[1];
+					}
+				} //Before first
+				//Between first and second
+				else if(n.items[0] > item && item < n.items[1]) {
+					Node result = put(n.subtrees[1], item);
+					//If no violation then left subtree is replaced with the new one
+					if(result.nodeType != 4) {
+						n.subtrees[1] = result;
+					}
+					else {
+						n.subtrees[3] = n.subtrees[2];
+						n.subtrees[2] = new Node(result.items[2], result.subtrees[2], result.subtrees[3]);
+						n.subtrees[1] = new Node(result.items[0], result.subtrees[0], result.subtrees[1]);
+						n.items[2] = n.items[1];
+						n.items[1] = result.items[1];
+					}
+				} //Between first and second
+				else {
+					Node result = put(n.subtrees[2], item);
+					// If no violation then left subtree is replaced with the new one
+					if (result.nodeType != 4) {
+						n.subtrees[2] = result;
+					} 
+					else {
+						n.subtrees[3] = new Node(result.items[2], result.subtrees[2], result.subtrees[3]);
+						n.subtrees[2] = new Node(result.items[0], result.subtrees[0], result.subtrees[1]);
+						n.items[2] = result.items[1];
+					}
+				} // Past second
+				
+				return n;
+					
 			} else
 				throw new RuntimeException("ERROR: " + n.nodeType + "-node found while inserting");
 
