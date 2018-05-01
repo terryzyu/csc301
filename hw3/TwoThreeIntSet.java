@@ -75,7 +75,7 @@ public class TwoThreeIntSet {
 		}
 
 		else if (n.nodeType == 3) {
-			// TODO DONE?
+			// TODO DONE
 			// If the node is a 3-node, we must check both items in this node. If neither is
 			// the item we are looking for, we must decide which of the three subtrees to
 			// search next.
@@ -165,7 +165,7 @@ public class TwoThreeIntSet {
 			}
 
 			else if (n.nodeType == 3) {
-				// TODO Done?
+				// TODO Done
 				// Turn this into a 4-node and return it since you are allowed
 				// to temporarily have a 4-node as a the root.
 				if (item < n.items[0]) {
@@ -229,7 +229,7 @@ public class TwoThreeIntSet {
 				return n;
 
 			} else if (n.nodeType == 3) {
-				// TODO Done?
+				// TODO Done
 				//Before first
 				if(item < n.items[0]) {
 					Node result = put(n.subtrees[0], item);
