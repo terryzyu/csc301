@@ -142,12 +142,20 @@ public class LinearProbingHashST<Key, Value> {
         if (n >= m/2) resize(2*m);
 
         int i;
+        int hash = hash(key);
+        if(vals[hash] == null && keys[hash] != null) {
+        	keys[hash] = key;
+        	vals[hash] = val;
+        	n++;
+        	return;
+        }
         for (i = hash(key); keys[i] != null; i = (i + 1) % m) {
-            if (keys[i].equals(key)) {
+            if (keys[i].equals(key)) { //Replaces current val with new val
                 vals[i] = val;
                 return;
             }
         }
+        
         keys[i] = key;
         vals[i] = val;
         n++;
@@ -163,7 +171,7 @@ public class LinearProbingHashST<Key, Value> {
     public Value get(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to get() is null");
         for (int i = hash(key); keys[i] != null; i = (i + 1) % m)
-            if (keys[i].equals(key))
+            if (keys[i].equals(key) && vals[i] != null)
                 return vals[i];
         return null;
     }
@@ -186,8 +194,10 @@ public class LinearProbingHashST<Key, Value> {
         }
 
         // delete key and associated value
-        keys[i] = null;
+        //Lazy deletion. Sets value to null but not key
+        //keys[i] = null;
         vals[i] = null;
+        //put(key, null);
 
         // rehash all keys in same cluster
         i = (i + 1) % m;
@@ -217,11 +227,33 @@ public class LinearProbingHashST<Key, Value> {
      *
      * @return all keys in this symbol table
      */
+    // ORIGINAL ITERABLE KEYS
     public Iterable<Key> keys() {
         ArrayList<Key> queue = new ArrayList<Key>();
         for (int i = 0; i < m; i++)
             if (keys[i] != null) queue.add(keys[i]);
         return queue;
+    }
+    
+    
+    public void print() {
+    	for (int i = 0; i < m; i++) {
+            System.out.print(i + "\t");
+        }
+    	System.out.println();
+        for (int i = 0; i < m; i++) {
+            if (keys[i] != null) 
+            	System.out.print(keys[i] + "\t");
+            else
+            	System.out.print("null\t");
+        }
+        System.out.println();
+        for (int i = 0; i < m; i++) {
+            if (vals[i] != null) 
+            	System.out.print(vals[i] + "\t");
+            else
+            	System.out.print("null\t");
+        }
     }
 
     // integrity check - don't check after each put() because
