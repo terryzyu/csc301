@@ -140,21 +140,25 @@ public class LinearProbingHashST<Key, Value> {
 
         // double table size if 50% full
         if (n >= m/2) resize(2*m);
-
+        
         int i;
-        int hash = hash(key);
-        if(vals[hash] == null && keys[hash] != null) {
-        	keys[hash] = key;
-        	vals[hash] = val;
-        	n++;
-        	return;
-        }
         for (i = hash(key); keys[i] != null; i = (i + 1) % m) {
             if (keys[i].equals(key)) { //Replaces current val with new val
                 vals[i] = val;
+                removeDuplicates(key, val);
                 return;
             }
+            if(vals[i] == null && keys[i] != null) { //Inserts into lazy deleted slot
+            	keys[i] = key;
+            	vals[i] = val;
+                removeDuplicates(key, val);
+            	n++;
+            	return;
+            }
         }
+        
+        
+       
         
         keys[i] = key;
         vals[i] = val;
@@ -174,6 +178,15 @@ public class LinearProbingHashST<Key, Value> {
             if (keys[i].equals(key) && vals[i] != null)
                 return vals[i];
         return null;
+    }
+    
+    private void removeDuplicates(Key key, Value val) { //This loops checks for duplicate keys that occur afterwards
+    	 int h;
+         for (h =  hash(key); keys[h] != null; h = (h + 1) % m) {
+             if(keys[h].equals(key) && vals[h] != val) {
+             	vals[h] = null;
+             }
+         }
     }
 
     /**
@@ -197,10 +210,12 @@ public class LinearProbingHashST<Key, Value> {
         //Lazy deletion. Sets value to null but not key
         //keys[i] = null;
         vals[i] = null;
+        n--;
         //put(key, null);
 
         // rehash all keys in same cluster
-        i = (i + 1) % m;
+        //Commented out because if we rehash we physically remove lazy keys
+        /*i = (i + 1) % m;
         while (keys[i] != null) {
             // delete keys[i] an vals[i] and reinsert
             Key   keyToRehash = keys[i];
@@ -210,14 +225,13 @@ public class LinearProbingHashST<Key, Value> {
             n--;
             put(keyToRehash, valToRehash);
             i = (i + 1) % m;
-        }
+        }*/
 
-        n--;
 
         // halves size of array if it's 12.5% full or less
         if (n > 0 && n <= m/8) resize(m/2);
 
-        assert check();
+        //assert check();
     }
 
     /**
@@ -231,7 +245,7 @@ public class LinearProbingHashST<Key, Value> {
     public Iterable<Key> keys() {
         ArrayList<Key> queue = new ArrayList<Key>();
         for (int i = 0; i < m; i++)
-            if (keys[i] != null) queue.add(keys[i]);
+            if (keys[i] != null && vals[i] != null) queue.add(keys[i]);
         return queue;
     }
     

@@ -88,56 +88,163 @@ public class HW4Test {
 		st.put(7, "seven");
 
 		st.delete(7);
+		assertFalse(st.isLazyDeleted(2));
+		st.delete(6);
 		st.put(3, "three");
-		st.put(4,"four");
-		st.print();
-		System.out.println();
-		System.out.println();
-		st.put(7, "seven");
+		st.put(0, "zero");
+		st.put(1, "one");
+		//st.put(15,"5teen");
+		//st.print();                     //FIRST PRINT
+		//System.out.println();
+		//System.out.println();
+		//st.put(7, "seven");
+		st.put(4, "four");
 		st.put(10,"ten");
 		st.put(5,"five");
-		st.print();
+		//st.print();                     //SECOND PRINT
 		
-		st.delete(5);
-		System.out.println();
-		System.out.println();
-		st.print();
+		st.delete(2);
+		//System.out.println();
+		//System.out.println();
 		st.delete(3);
-		System.out.println();
-		System.out.println();
-		st.print();
-/*		st.put(17, "7teen");
+		//st.print();                     //THIRD PRINT
+		st.put(11, "11elv");
+		st.delete(0);
+		//System.out.println();
+		//System.out.println();
+		//st.print();                     //FOURTH PRINT
+		st.put(17, "7teen");
 
-		System.out.println("Size: " + st.size());
-		System.out.println();
-		System.out.println();
-		st.print();
-		System.out.println("Size: " + st.size());
+		//System.out.println("Size: " + st.size());
+		//System.out.println();
+		//System.out.println();
+		//st.print();
+		//System.out.println("Size: " + st.size());
 		
 		st.put(9, "nine");
-		System.out.println();
-		System.out.println();
-		st.print();
+		//System.out.println();
+		//System.out.println();
+		//st.print();
 		
 		st.put(5, "five");
 		//st.put(0, "zero");
-		System.out.println();
-		System.out.println();
-		st.print();
+		//System.out.println();
+		//System.out.println();
+		//st.print();
 		st.put(5, "5ive");
 
-		System.out.println();
-		System.out.println();
-		st.print();*/
+		//System.out.println();
+		//System.out.println();
+		//st.print();
 	}
 	
 
+	@Test
+	public void again() {
+		LinearProbingHashST<Integer, String> st = new LinearProbingHashST<Integer, String>(4);
+		st.put(0, "zero");
+		st.put(1, "one");
+		st.put(2, "two");
+		st.put(3, "three");
+		st.put(4, "four");
+		st.put(6, "six");
+		st.delete(2);
+		st.put(2, "newTwo");
+		st.put(2, "MewTwo");
+		System.out.println();
+		System.out.println();
+		st.print();
+		st.delete(0);
+		System.out.println();
+		System.out.println();
+		st.delete(4);
+		st.delete(6);
+		st.print();
+		System.out.println(st.contains(6));
+		System.out.println();
+		System.out.println();
+		st.print();
+		System.out.println();
+	System.out.println();
+		st.print();
+	}
 	
+	@Test
+	public void doubleInsertion() {
+		//Tests for when keys are double inserted e.g. **Z*YZ** and if properly removed
+		LinearProbingHashST<Integer, String> st = new LinearProbingHashST<Integer, String>(4);
+		st.put(1, "X"); //Hash to same
+		st.put(17, "Y"); //Hash to same
+		st.put(33, "Z"); //Hash to same
+		st.put(49, "A"); //Hash to same
+		st.put(65, "B"); //Hash to same
+		
+		st.print();
+		
+		st.delete(1);
+		st.delete(49);
+		
+		System.out.println();
+		System.out.println();
+		st.print();
+
+		st.put(81, "FAte");
+		System.out.println();
+		System.out.println();
+		st.print();
+		st.put(65, "Update");
+
+		st.put(17, "Up17");
+		st.put(8, "scan");
+		
+		System.out.println();
+		System.out.println();
+		st.print();
+		System.out.println();
+		System.out.println(st.contains(8));
+		
+	}
 	
+	@Test
+	public void keysIterator() {
+		//Tests the iterator function. Should not include lazy keys
+		LinearProbingHashST<Integer, String> st = new LinearProbingHashST<Integer, String>(4);
+		st.put(1, "X"); //Hash to same
+		st.put(17, "Y"); //Hash to same
+		st.put(33, "Z"); //Hash to same
+		st.put(49, "A"); //Hash to same
+		st.put(65, "B"); //Hash to same
+		
+		for(Integer key: st.keys()) {
+			System.out.println(key);
+		}
+		
+		st.delete(1);
+		st.delete(49);
+		
+		System.out.println();
+		for(Integer key: st.keys()) {
+			System.out.println(key);
+		}
+		
+		st.put(81, "FAte"); //Hash to same
+		st.put(65, "Update");
+		st.put(17, "Up17");
+		st.put(8, "scan");
+		
+		System.out.println();
+		for(Integer key: st.keys()) {
+			System.out.println(key);
+		}
+		
+	}
 	
-	
-	
-	
-	
+	@Test
+	public void empty() {
+		LinearProbingHashST<Integer, String> st = new LinearProbingHashST<Integer, String>(4);
+		assertTrue(st.isEmpty());
+		st.put(1, "not empty");
+		assertFalse(st.isEmpty());
+	}
 	
 }
