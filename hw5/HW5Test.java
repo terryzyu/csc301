@@ -76,6 +76,14 @@ public class HW5Test {
 		grid = GridUtilities.rotateClockwise(grid);
 		solution = Solver.solve(grid);
 		checkSol(grid, solution, 18);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 18);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 18);
 	}
 
 }
