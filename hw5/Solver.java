@@ -1,10 +1,8 @@
 package hw5;
 
-import static org.junit.Assert.fail;
-
 public class Solver {
 	public static String solve(char[][] grid) {
-		
+
 		//Grid will always be a square
 		int vertices = grid.length * grid.length; //Each cell/index is a vertex for the graph
 		int size = grid.length; //Graph is a square so length and width are the same. Storing in variable to avoid multiple calls
@@ -15,55 +13,62 @@ public class Solver {
 		int endVertex = vertex(grid, 'f', size); //Gets vertex of finish
 		
 		BreadthFirstPaths bfp = new BreadthFirstPaths(graph, startVertex); //Generates bfp of start vertex
-		int[] pathIntegers = new int[bfp.distTo(endVertex) + 1]; //Stores the path of travel through vertices from s to f
 		
-		//Populates array with movements
-		int iter = 0; 
-		for(Integer i: bfp.pathTo(endVertex)) {
-			pathIntegers[iter] = i;
-			iter++;
+		if(bfp.hasPathTo(endVertex)) {
+			int[] pathIntegers = new int[bfp.distTo(endVertex) + 1]; //Stores the path of travel through vertices from s to f
+			
+			//Populates array with movements
+			int iter = 0; 
+			for(Integer i: bfp.pathTo(endVertex)) {
+				pathIntegers[iter] = i;
+				iter++;
+			}
+			
+			//Generates and stores solution
+			String solution = stringPath(pathIntegers, size); 
+	
+			return solution;
 		}
-		
-		//Interprets array and returns solution of shortest path
-		String solution = stringPath(pathIntegers, size); 
-		
-		// TODO
-		/*
-		 * 1. Construct a graph using grid
-		 * 2. Use BFS to find shortest path from start to finish
-		 * 3. Return the sequence of moves to get from start to finish
-		 */
-		
-		// Hardcoded solution to toyTest
-		//return "RRRDDDDDDDDDRRRRRR";
-		return solution;
+		else
+			return null; //If there is no solution i.e. no path from s to f
 	}
 	
+	/**
+	 * Takes in path of vertices and interprets it to generate
+	 * movement path to get from start to finish
+	 * @param pathIntegers
+	 * @param size
+	 * @return string of movements in readable characters
+	 */
+	
 	private static String stringPath(int[] pathIntegers, int size) {
-		int num = -1;
-		String solution = "";
+		int num; //Calculates difference between two vertices
+		String solution = ""; //Contains readable movements
+		
+		//Iterates through and translates movements to characters
 		for (int x = 0; x < pathIntegers.length - 1; x++) {
 			num = pathIntegers[x + 1] - pathIntegers[x];
-			switch (num) {
-			case -1:
+			if(num == -1)
 				solution += 'L';
-				break;
-			case 1:
+			if(num == 1)
 				solution += 'R';
-				break;
-			case 10:
+			if(num > 1)
 				solution += 'D';
-				break;
-			case -10:
+			if(num < -1)
 				solution += 'U';
-				break;
-			default:
-				fail("Illegal Movement: " + num);
-			}
 		}
+		
 		return solution;
 	} //stringPath()
 
+	
+	/**
+	 * Converts appropriate index location of letter to vertex stored in Graph object
+	 * @param grid
+	 * @param letter
+	 * @param size
+	 * @return respective graph vertex number
+	 */
 	private static int vertex(char [][] grid, char letter, int size) {
 		int row = -1;
 		int col = -1;
@@ -78,6 +83,15 @@ public class Solver {
 		return row * size + col;
 	} //vertex()
 	
+	
+	/**
+	 * Generates the appropriate edges between vertices. 
+	 * Valid edges are up, down, left, and right with respect to vertex.
+	 * @param graph
+	 * @param grid
+	 * @param size
+	 * @return a graph populated with edges
+	 */
 	private static Graph generateEdges(Graph graph, char[][] grid, int size) {
 		for(int row = 0; row < size; row++) {
 			for(int col = 0; col < size; col++) {
@@ -93,6 +107,17 @@ public class Solver {
 		return graph;
 	} //generateEdges
 	
+	
+	/**
+	 * The next 4 methods (checkX) determine if there is a valid movement in the X direction
+	 * and isn't a *. If so it adds an edge to the graph between the two vertices.
+	 * @param grid
+	 * @param row
+	 * @param col
+	 * @param graph
+	 * @param size
+	 * @return graph with added edge if applicable. 
+	 */
 	private static Graph checkRight(char[][] grid, int row, int col, Graph graph, int size) {
 		try {
 			if(grid[row][col+1] != '*')

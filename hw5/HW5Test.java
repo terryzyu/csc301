@@ -58,7 +58,7 @@ public class HW5Test {
 					"s         ",
 					"          ",
 					"  *       ",
-					"  *  *****",
+					"  *** ****",
 					"  *       ",
 					"  *       ",
 					"  *       ",
@@ -67,12 +67,11 @@ public class HW5Test {
 					"  *      f"
 			};
 		char[][] grid;
-		/* Solution to this grid is hardcoded */
+		
 		grid = GridUtilities.fromStringArray(data);
 		String solution = Solver.solve(grid);
 		checkSol(grid, solution, 18);
 		
-		/* Hardcoded solution does not solve this grid */
 		grid = GridUtilities.rotateClockwise(grid);
 		solution = Solver.solve(grid);
 		checkSol(grid, solution, 18);
@@ -84,6 +83,75 @@ public class HW5Test {
 		grid = GridUtilities.rotateClockwise(grid);
 		solution = Solver.solve(grid);
 		checkSol(grid, solution, 18);
-	}
+	} //toyTest()
+	
+	@Test
+	public void failTest() { //No solution possible
+		String[] data = 
+			{
+					"s         ",
+					"          ",
+					"  *       ",
+					"  ********",
+					"  *       ",
+					"  *       ",
+					"  *       ",
+					"  *       ",
+					"  *       ",
+					"  *      f"
+			};
+		
+		char[][] grid;
+		grid = GridUtilities.fromStringArray(data);
+		String solution = Solver.solve(grid);
+		assertNull(solution);
+
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		assertNull(solution);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		assertNull(solution);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		assertNull(solution);
+	} //failTest()
+	
+	@Test
+	public void middleS() { //s and f are elsewhere
+		String[] data = 
+			{
+					"          ",
+					"          ",
+					"  *       ",
+					"  *       ",
+					" f*       ",
+					"  *  s    ",
+					"  ********",
+					"  *       ",
+					"  *       ",
+					"          "
+			};
+		
+		char[][] grid;
+		grid = GridUtilities.fromStringArray(data);
+		String solution = Solver.solve(grid);
+		checkSol(grid, solution, 11);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 11);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 11);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 11);
+	} //middleS()
+	
 
 }
