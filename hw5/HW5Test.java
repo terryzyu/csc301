@@ -153,5 +153,91 @@ public class HW5Test {
 		checkSol(grid, solution, 11);
 	} //middleS()
 	
+	
+	@Test
+	public void oneSolution() { //one possible solution
+		String[] data = 
+			{
+					"**********",
+					"**********",
+					"*     ****",
+					"* *** ****",
+					"*f*** ****",
+					"*****s****",
+					"**********",
+					"**********",
+					"**********",
+					"**********"
+			};
+		
+		char[][] grid;
+		grid = GridUtilities.fromStringArray(data);
+		String solution = Solver.solve(grid);
+		checkSol(grid, solution, 9);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 9);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 9);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 9);
+	} //oneSolution()
 
+	
+	@Test
+	public void scaleUp() { //Includes loop, larger maze, oddly placed spaces
+		String[] data = 
+			{
+					"******           *******  ",
+					"****   ********   ******  ",
+					"*     ********** *******  ",
+					"* *** ********** *******  ",
+					"*f* * ********** *******  ",
+					"***     ******** *******  ",
+					"** **** *****    *******  ",
+					"** **** ******** *******  ",
+					"**      ********  s*****  ",
+					"******* ********* ******  ",
+					"** **** ********* ******  ",
+					"** **** ********* ******  ",
+					"**  *   ********   *****  ",
+					"************************  ",
+					"******* *****       ****  ",
+					"** **** ****************  ",
+					"** **** ****************  ",
+					"**      ********   *****  ",
+					"******* ******** *******  ",
+					"******* ****************  ",
+					"** **** ****************  ",
+					"** **** ****************  ",
+					"**   *  *** ****  ******  ",
+					"***************** ******  ",
+					"******* ********* ******  ",
+					"******* ***       ******  "
+			};
+		
+		char[][] grid;
+		grid = GridUtilities.fromStringArray(data);
+		String solution = Solver.solve(grid);
+		checkSol(grid, solution, 29);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 29);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 29);
+		
+		grid = GridUtilities.rotateClockwise(grid);
+		solution = Solver.solve(grid);
+		checkSol(grid, solution, 29);
+	} //oneSolution()
+
+	
 }

@@ -119,36 +119,45 @@ public class Solver {
 	 * @return graph with added edge if applicable. 
 	 */
 	private static Graph checkRight(char[][] grid, int row, int col, Graph graph, int size) {
-		try {
+		if(col + 1 < size) { //Check if out of bounds
 			if(grid[row][col+1] != '*')
 				graph.addEdge(row * size + col, row * size + col + 1);
-		}catch(ArrayIndexOutOfBoundsException e) {};
-		return graph;
+			return graph;
+		}
+		else
+			return graph;
 		
 	} //checkRight()
 
 	private static Graph checkLeft(char[][] grid, int row, int col, Graph graph, int size) {
-		try {
+		if(col - 1 >= 0) {
 			if(grid[row][col-1] != '*')
 				graph.addEdge(row * size + col, row * size + col - 1);
-		}catch(ArrayIndexOutOfBoundsException e) {};
-		return graph;
+			return graph;
+		}
+		else
+			return graph;
 	} //checkLeft()
 
 	private static Graph checkDown(char[][] grid, int row, int col, Graph graph, int size) {
-		try {
+		if(row + 1 < size) {
 			if(grid[row+1][col] != '*')
 				graph.addEdge(row * size + col, (row + 1) * size + col);
-		}catch(ArrayIndexOutOfBoundsException e) {};
-		return graph;
+			return graph;
+		}
+		else
+			return graph;
 	} //checkDown()
 
 	private static Graph checkUp(char[][] grid, int row, int col, Graph graph, int size) {
-		try {
+		if(row - 1 >= 0) {
 			if(grid[row-1][col] != '*')
 				graph.addEdge(row * size + col, (row - 1) * size + col);
-		}catch(ArrayIndexOutOfBoundsException e) {};
-		return graph;
+			return graph;
+		}
+		else
+			return graph;
+		
 	} //checkUp()
 	
 }
